@@ -25,5 +25,6 @@ taks_2: Script python para extração, transformação e carga dos tweets relaci
 ### get_data_pandemics
 Arquivo Python para coleta dos dados de covid/vacinação, ebola, h1n1 e sars
 Esse script foi divido atráves dos seguintes dataframes:
-df_covid
+- df_covid: Dataset da covid, contendo dados a partir do início dos casos até o D-1, sendo D-1 da data da execução do job. Foi realizado algumas tratativas, como um acumulado dos dias por paises, remoção de outiliers e dados negativos, substituindo pelo mesmo dia da semana passada. E um outro dataset, contendo os dados de vacinações, onde mergeamos essas duas bases pelo ID do pais, e unimos em um único dataframe.
+- 
 
