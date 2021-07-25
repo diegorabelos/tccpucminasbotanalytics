@@ -38,10 +38,6 @@ df_covid_date['contador_dia'] = 1
 df_covid_date['contador_dia'] = df_covid_date['contador_dia'].cumsum()
 df_covid = pd.merge(left=df_covid,right=df_covid_date,how='left',left_on='date',right_on='date')
 
-# Marcação da origem da doença
-df_covid['origem'] = np.logical_and(df_covid['contador_dia']==1, df_covid['tt_cases'] != 0)
-df_covid['origem'] = np.where(df_covid['origem'] == False,0,1)
-
 
 df_covid['date'] = pd.to_datetime(df_covid['date'])
 
@@ -122,11 +118,6 @@ df_ebola_date['contador_dia'] = 1
 df_ebola_date['contador_dia'] = df_ebola_date['contador_dia'].cumsum()
 df_ebola = pd.merge(left=df_ebola,right=df_ebola_date,how='left',left_on='date',right_on='date')
 
-# Marcação da origem da doença
-df_ebola['origem'] = np.logical_and(df_ebola['contador_dia']==1, df_ebola['tt_cases'] != 0)
-df_ebola['origem'] = np.where(df_ebola['origem'] == False,0,1)
-
-
 # tt cases negativos
 df_ebola[(df_ebola.tt_cases < 0)].count()
 # tt deaths negativos
@@ -167,11 +158,6 @@ df_h1n1_date['contador_dia'] = 1
 df_h1n1_date['contador_dia'] = df_h1n1_date['contador_dia'].cumsum()
 df_h1n1 = pd.merge(left=df_h1n1,right=df_h1n1_date,how='left',left_on='date',right_on='date')
 
-# Marcação da origem da doença
-df_h1n1['origem'] = np.logical_and(df_h1n1['contador_dia']==1, df_h1n1['tt_cases'] != 0)
-df_h1n1['origem'] = np.where(df_h1n1['origem'] == False,0,1)
-
-
 # tt cases negativos
 df_h1n1[(df_h1n1.tt_cases < 0)].count()
 # tt deaths negativos
@@ -211,10 +197,6 @@ df_sars_date = pd.DataFrame(df_sars_date)
 df_sars_date['contador_dia'] = 1
 df_sars_date['contador_dia'] = df_sars_date['contador_dia'].cumsum()
 df_sars = pd.merge(left=df_sars,right=df_sars_date,how='left',left_on='date',right_on='date')
-
-# Marcação da origem da doença
-df_sars['origem'] = np.logical_and(df_sars['contador_dia']==1, df_sars['tt_cases'] != 0)
-df_sars['origem'] = np.where(df_sars['origem'] == False,0,1)
 
 # tt cases negativos
 df_sars[(df_sars.tt_cases < 0)].count()
