@@ -138,44 +138,19 @@ plt.xlabel("Deaths")
 plt.ylabel("Cases")
 
 
+X = df_prophet_vaccine['y'].values
+y = df_prophet_cases['y'].values
 
-# Testando um modelo de machine learning
-
-previsores = df_covid.iloc[:, 1:4].values
-classe = df_covid.iloc[:, 4].values
-
-
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-labelencoder_previsores = LabelEncoder()
-
-#labels = labelencoder_previsores.fit_transform(previsores[:,1])
-previsores[:,0] = labelencoder_previsores.fit_transform(previsores[:,0])
-previsores[:,1] = labelencoder_previsores.fit_transform(previsores[:,1])
-previsores[:,2] = labelencoder_previsores.fit_transform(previsores[:,2])
-
-labelencoder_classe = LabelEncoder()
-classe = labelencoder_classe.fit_transform(classe)
-
-from sklearn.preprocessing import StandardScaler
-scaler = StandardScaler()
-previsores = scaler.fit_transform(previsores)
-
-from sklearn.model_selection import train_test_split
-previsores_treinamento, previsores_teste, classe_treinamento, classe_teste = train_test_split(previsores, classe, test_size=0.20, random_state=0)
+X = X.reshape(-1,1)
 
 
-#####################################################
-from sklearn.neighbors import KNeighborsClassifier
-classificador = KNeighborsClassifier(n_neighbors=20,metric='minkowski',p=2)
+regressor = LinearRegression()
+regressor.fit(X, y)
 
-classificador.fit(previsores_treinamento,classe_treinamento)
-previsoes = classificador.predict(previsores_teste)
+import matplotlib.pyplot as plt
+plt.scatter(X, y)
+plt.plot(X, regressor.predict(X), color = 'red')
+plt.title ("Regressão linear simples")
+plt.xlabel("Vaccines")
+plt.ylabel("Cases")
 
-from sklearn.metrics import confusion_matrix, accuracy_score
-precisao = accuracy_score(classe_teste,previsoes)
-matriz = confusion_matrix(classe_teste,previsoes)   
-
-import collections
-collections.Counter(classe_teste)
-
-print(precisao)

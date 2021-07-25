@@ -23,7 +23,6 @@ df_covid = df_covid[['id','category','date','location','continent','new_cases','
 df_covid = df_covid.rename(columns={"new_cases":"tt_cases","new_deaths":"tt_deaths","location":"country"})
 # Delete Continente NULL
 df_covid_index_to_drop = df_covid[df_covid['continent'].isnull()].index
-#df_covid_index_to_drop = df_covid[df_covid['continent']==''].index
 df_covid.drop(df_covid_index_to_drop , inplace=True)
 
 # Create dataframe to get continent
@@ -83,6 +82,10 @@ df_covid.drop(["date_x","tt_cases_y","tt_deaths_y"], axis=1, inplace=True)
 url_vaccinations='https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv'
 df_vaccinations = pd.read_csv(url_vaccinations,index_col=0,parse_dates=[0])
 df_vaccinations['date'] = pd.to_datetime(df_vaccinations['date'])
+
+df_vaccinations[(df_vaccinations.people_fully_vaccinated < 0)].count()
+df_vaccinations.isnull().any()
+df_vaccinations['people_fully_vaccinated'] = np.where(df_vaccinations['people_fully_vaccinated'].isnull(),0,df_vaccinations['people_fully_vaccinated'])
 
 df_covid = pd.merge(left=df_covid,right=df_vaccinations[['date','iso_code','people_fully_vaccinated']],how='left',left_on=['date','id'],right_on=['date','iso_code'])
 
