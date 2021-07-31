@@ -7,10 +7,12 @@ from fbprophet import Prophet
 from sklearn.linear_model import LinearRegression
 import seaborn as sns
 
-directory = '/usr/local/airflow/dags/img/'
+# alterar para o diretório do seu projeto
+directory = 'C:/Users/diego/Documents/git/tccpucminasbotanalytics/dags/img/'
 
 #dags_postgres_1
-database_connection = sqlalchemy.create_engine('postgresql://airflow:airflow@0.0.0.0/postgres')
+database_connection = sqlalchemy.create_engine('postgresql://airflow:airflow@localhost/postgres')
+database_connection_2 = sqlalchemy.create_engine('postgresql://airflow:airflow@0.0.0.0/postgres')
 
 query = """
 
@@ -27,8 +29,10 @@ ORDER BY 1,2;
 
 """
 
-
-df_covid = pd.read_sql(con=database_connection,sql=query)
+try:
+    df_covid = pd.read_sql(con=database_connection,sql=query)
+except:
+    df_covid = pd.read_sql(con=database_connection_2,sql=query)
 
 df_covid.columns
 
@@ -42,7 +46,7 @@ df_covid['tt_vaccine'] = np.where(df_covid['tt_vaccine'].isnull(),0,df_covid['tt
 
 df_covid_cases = pd.DataFrame(df_covid.groupby(['country'])['tt_cases'].sum())
 
-# get top 3 countrys by cases
+# get top 5 countrys by cases
 df_covid_cases_top5_contador = pd.DataFrame(df_covid_cases.sort_values(['tt_cases'],ascending=False).head(5))
 df_covid_cases_top5_contador['country'] = df_covid_cases_top5_contador.index
 df_covid_cases_top5_contador['contador'] = 1
