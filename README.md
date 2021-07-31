@@ -4,10 +4,10 @@
 A documentação está dividida de acordo com os arquivos e a lógica da aplicação:
 
 ### DockerFile
-Arquivo de imagem docker puckel/airflow, onde realizamos a instalação de algumas bibliotecas em que vamos utilizar na aplicação Python.
+Arquivo de imagem docker puckel/airflow, onde realizamos a instalação de algumas bibliotecas em que vamos utilizar para executar os scripts python.
 
 ### requeriments.txt
-Bibliotecas utilizadas no servidor airflow
+Bibliotecas utilizadas nos scripts python de cargas e análises de dados.
 
 ### docker-compose.yml
 Os containers estão divididos em 3 imagens:
@@ -71,6 +71,5 @@ Vamos utilizar a biblioteca Prophet para prevermos a quantidade de casos, mortes
 
 Após prevermos, realizaremos as seguintes análises, mas agora utilizando a biblioteca sklearn do python:
 - Regressão Linear para validarmos a tendencia do aumento de mortes em relação ao aumento de casos
-- Modelo de machine learning, para medirmos a acurácia entre os casos e mortes, utilizando KNeighborsClassifier. Esse modelo foi o com a melhor performance, com precisão de aproximadamente 90%
- 
+- Regressão Linear para validarmos a tendencia do aumento de vacinas em relação ao aumento de casos 
 
